@@ -35,9 +35,9 @@ export const HomeScreenView: React.FC<IHomeScreenViewProps> = (props) => {
     });
 
     return <SafeAreaView style={styles.container}>
-        <Text style={styles.balanceTitle}>your balance is</Text>
-        {props.balance ? <>
-            <Text style={styles.balance}>{`${props.balance} SOL`}</Text>
+        <Text style={styles.balanceTitle}>{props.balance ? "your balance is" : "checking your balance..."}</Text>
+        {true ? <>
+            <Text style={styles.balance}>{props.balance ? `${props.balance} SOL` : ""}</Text>
         </> : undefined}
         <View style={styles.airdropButtonContainer}>
             <TextButton text="request airdrop of 1 SOL" onPress={() => props.requestAirdrop(1)} />

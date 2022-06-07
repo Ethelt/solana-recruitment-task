@@ -16,13 +16,11 @@ export class SolanaApi {
 
     static async getBalance(publicKey: string) {
         const response = await SolanaApi.makeRequest<[string], number>("getBalance", [publicKey]);
-        console.log(response)
         return response.result.value / LAMPORTS_PER_SOL;
     }
 
     static async requestAirdrop(publicKey: string, amount: number) {
         const res = await SolanaApi.makeRequest<[string, number]>("requestAirdrop", [publicKey, amount * LAMPORTS_PER_SOL]);
-        console.log(res);
         return res;
     }
 
@@ -39,6 +37,7 @@ export class SolanaApi {
             params: paramsWithConfiguration
         };
 
+        //TODO: there should be error handling here
         const response = await fetch(SolanaApi.nodeUrl, { method: "POST", body: JSON.stringify(body), headers });
         const data: ISolanaApiResponse<Res> = await response.json();
         return data;
