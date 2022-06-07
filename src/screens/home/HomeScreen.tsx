@@ -37,6 +37,5 @@ export const HomeScreen = () => {
 
     return <HomeScreenView
         balance={balance}
-        requestAirdrop={requestAirdrop}
-        refresh={refreshUserBalance} />;
+        requestAirdrop={requestAirdrop} />;
 };

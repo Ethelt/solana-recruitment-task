@@ -6,7 +6,6 @@ import { TextButton } from "../../components/TextButton";
 interface IHomeScreenViewProps {
     readonly balance?: number;
     readonly requestAirdrop: (amount: number) => void;
-    readonly refresh: () => void;
 }
 
 export const HomeScreenView: React.FC<IHomeScreenViewProps> = (props) => {
@@ -36,12 +35,10 @@ export const HomeScreenView: React.FC<IHomeScreenViewProps> = (props) => {
 
     return <SafeAreaView style={styles.container}>
         <Text style={styles.balanceTitle}>{props.balance ? "your balance is" : "checking your balance..."}</Text>
-        {true ? <>
-            <Text style={styles.balance}>{props.balance ? `${props.balance} SOL` : ""}</Text>
-        </> : undefined}
+        <Text style={styles.balance}>{props.balance ? `${props.balance} SOL` : ""}</Text>
+
         <View style={styles.airdropButtonContainer}>
             <TextButton text="request airdrop of 1 SOL" onPress={() => props.requestAirdrop(1)} />
-            <TextButton text="refresh" onPress={() => props.refresh()} />
         </View>
     </SafeAreaView>;
 };
