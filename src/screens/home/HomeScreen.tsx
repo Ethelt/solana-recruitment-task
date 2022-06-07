@@ -1,13 +1,11 @@
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useCallback, useState } from "react";
-import { RETRIES_COUNT } from "../../constants";
 import { SolanaApi } from "../../SolanaApi";
 import { UserData } from "../../UserData";
 import { HomeScreenView } from "./HomeScreenView";
 
 export const HomeScreen = () => {
     const [balance, setBalance] = useState<number>();
-    const [isAmountSelectionShown, setIsAmountSelectionShown] = useState(false);
 
     useFocusEffect(useCallback(() => {
         refreshUserBalance();
@@ -22,6 +20,12 @@ export const HomeScreen = () => {
 
     const requestAirdrop = async (amount: number) => {
         await SolanaApi.requestAirdrop(UserData.publicKey ?? "", amount);
+        watchForBalanceChange();
+    };
+
+    const watchForBalanceChange = () => {
+        const RETRIES_COUNT = 3;
+        const RETRY_INTERVAL = 1000;
 
         const checkForBalanceChange = (retriesCount: number) => {
             setTimeout(async () => {
@@ -29,10 +33,10 @@ export const HomeScreen = () => {
                 if (!didBalanceChange && retriesCount > 1) {
                     checkForBalanceChange(retriesCount - 1);
                 }
-            }, 1000);
+            }, RETRY_INTERVAL);
         };
 
-        checkForBalanceChange(RETRIES_COUNT)
+        checkForBalanceChange(RETRIES_COUNT);
     };
 
     return <HomeScreenView
